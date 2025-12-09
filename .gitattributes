@@ -9,3 +9,6 @@ Dodge[[:space:]]dataset/*.mp4 filter=lfs diff=lfs merge=lfs -text
 Dodge[[:space:]]dataset/*.csv filter=lfs diff=lfs merge=lfs -text
 Dodge[[:space:]]dataset/*.pt filter=lfs diff=lfs merge=lfs -text
 Dodge[[:space:]]dataset/*.mp4 filter=lfs diff=lfs merge=lfs -text
+Dodge[[:space:]]dataset/*.csv filter=lfs diff=lfs merge=lfs -text
+Dodge[[:space:]]dataset/*.pt filter=lfs diff=lfs merge=lfs -text
+Dodge[[:space:]]dataset/*.mp4 filter=lfs diff=lfs merge=lfs -text
