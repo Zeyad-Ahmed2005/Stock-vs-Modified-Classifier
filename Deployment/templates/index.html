@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Car Stock vs Modified Classifier</title>
+    <style>
+        body { font-family: Arial, sans-serif; text-align: center; margin-top: 50px; }
+        .container { max-width: 600px; margin: 0 auto; }
+        img { max-width: 100%; margin-top: 20px; }
+        .result { margin-top: 30px; font-size: 1.5em; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Car Image Classifier</h1>
+        <p>Upload a car photo to detect if it's <strong>Stock</strong> or <strong>Modified</strong></p>
+        
+        <form id="upload-form">
+            <input type="file" name="file" accept="image/*" required><br><br>
+            <button type="submit">Predict</button>
+        </form>
+        
+        <div id="result" class="result"></div>
+        <img id="preview" src="" alt="Uploaded image preview">
+    </div>
+
+    <script>
+        document.getElementById('upload-form').onsubmit = async (e) => {
+            e.preventDefault();
+            const formData = new FormData(e.target);
+            const response = await fetch('/predict', {
+                method: 'POST',
+                body: formData
+            });
+            const data = await response.json();
+            
+            const resultDiv = document.getElementById('result');
+            const preview = document.getElementById('preview');
+            
+            if (data.error) {
+                resultDiv.innerHTML = `<p style="color:red;">Error: ${data.error}</p>`;
+            } else {
+                resultDiv.innerHTML = `
+                    <p><strong>Prediction:</strong> ${data.predicted_class}</p>
+                    <p><strong>Confidence:</strong> ${(data.confidence * 100).toFixed(2)}%</p>
+                    <p>Stock: ${(data.probabilities.Stock * 100).toFixed(2)}% | 
+                       Modified: ${(data.probabilities.Modified * 100).toFixed(2)}%</p>
+                `;
+                preview.src = URL.createObjectURL(formData.get('file'));
+            }
+        };
+    </script>
+</body>
+</html>
